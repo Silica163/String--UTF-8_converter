@@ -1,6 +1,6 @@
-function Convernter(){}
+function Converter(){}
 
-Convernter.prototype.stringToHex = function(str){
+Converter.prototype.stringToHex = function(str){
     const hexlist = [];
     for (let letter of str){
         var hexvalue = this.uniToUTF_8(letter.codePointAt().toString(16));
@@ -12,7 +12,7 @@ Convernter.prototype.stringToHex = function(str){
     return hexlist;
 };
 
-Convernter.prototype.hexToString = function(hexlist){
+Converter.prototype.hexToString = function(hexlist){
     const lttrList = [];
     for (let hexVal of hexlist){
         var lttr = String.fromCharCode(parseInt(this.UTF_8ToUni(hexVal),16));
@@ -21,7 +21,7 @@ Convernter.prototype.hexToString = function(hexlist){
     return lttrList.join('');
 };
 
-Convernter.prototype.hexToBinary = function(hexlist){
+Converter.prototype.hexToBinary = function(hexlist){
     const bitlist = [];
     for (let byte of hexlist){
         var bitValue = parseInt(byte,16).toString(2);
@@ -33,7 +33,7 @@ Convernter.prototype.hexToBinary = function(hexlist){
     return bitlist;
 };
 
-Convernter.prototype.binaryToHex = function(binlist){
+Converter.prototype.binaryToHex = function(binlist){
     const hexlist = [];
     for (let byte of binlist){
         var hexVal = parseInt(byte,2).toString(16);
@@ -45,7 +45,7 @@ Convernter.prototype.binaryToHex = function(binlist){
     return hexlist;
 };
 
-Convernter.prototype.UTF_8ToUni = function(hexval){
+Converter.prototype.UTF_8ToUni = function(hexval){
     var bina = parseInt(hexval,16).toString(2);
     var bitlen = bina.length;
     delete hexval;
@@ -69,7 +69,7 @@ Convernter.prototype.UTF_8ToUni = function(hexval){
     return hexout;
 };
 
-Convernter.prototype.uniToUTF_8 = function(hexvalue){;
+Converter.prototype.uniToUTF_8 = function(hexvalue){;
     console.log('\n');
     var bina = parseInt(hexvalue,16).toString(2);
     var bitlen = bina.length;
