@@ -143,8 +143,3 @@ Convernter.prototype.uniToUTF_8 = function(hexvalue){;
     return hexout;
 
 };
-
-//exports.uniToUTF_8 = uniToUTF_8;
-//exports.UTF_8ToUni = UTF_8ToUni;
-//exports.Convernter = Convernter;
-module.exports = Convernter;
