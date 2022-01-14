@@ -80,36 +80,6 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
         if(bitlen > 11&&bitlen <=16){return 3}
         if(bitlen > 16&&bitlen <=21){return 4}
     })();
-    var stsl = {1:7,2:11,3:16,4:21}
-    var fbsl = {1:'0',2:'110',3:'1110',4:'11110'}
-    var sln = [6,12,18];
-    let sl6 = [];
-    var bitlist = '0'.repeat(stsl[slStatus]-bitlen)+bina;
-    // slice 6 bit 
-    // slice slStatus times
-    // add code at front
-    //sl6.unshift(bitlist.slice(-sln[0],bitlist.length))
-    for(let bit6 = 0;bit6 <= slStatus;bit6++){
-        console.log('bit6 : '+bit6+'  slStatus : '+slStatus);
-        if(bit6 == slStatus && slStatus == 1){
-            sl6.unshift(bitlist.slice(0,bitlist.length));console.log(1);
-            break;
-        }else if(bit6 == 0){
-            sl6.unshift(bitlist.slice(-sln[0],bitlist.length));console.log(2);
-        }else if(bit6 == slStatus){
-            sl6.unshift(bitlist.slice(0,-sln[bit6-1]));console.log(3);
-            break;
-        }else /*if(bit6<=slStatus&&(!(slStatus==1&&bit6==0)))*/{
-            sl6.unshift(bitlist.slice(-sln[bit6],-sln[bit6-1]));console.log(4);
-        }
-    }
-
-    console.log('byte : '+slStatus);
-    console.log('bitlist : '+bitlist);
-    console.log(sl6);
-    console.log(sl6.join(''));
-    delete bitlist;
-
     let slt = {
         1:function (bina){
             return '0'+('0'.repeat(7-bitlen))+bina;
@@ -137,8 +107,6 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
         },
     };
     var bitout = slt[slStatus](bina);
-    console.log(bitout);
-    //var bitout = sl6.join('');
     var hexout = parseInt(bitout,2).toString(16);
     return hexout;
 
