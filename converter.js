@@ -70,7 +70,6 @@ Converter.prototype.UTF_8ToUni = function(hexval){
 };
 
 Converter.prototype.uniToUTF_8 = function(hexvalue){;
-    console.log('\n');
     var bina = parseInt(hexvalue,16).toString(2);
     var bitlen = bina.length;
     delete hexvalue;
