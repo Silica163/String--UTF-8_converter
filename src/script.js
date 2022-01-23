@@ -6,6 +6,9 @@ const selvalue = document.getElementById("selector");
 
 
 
-textIn.onchange(
-    ()=>update(textIn.value)
+textIn.addEventListener("change",
+    (e)=>update(textIn.value)
+);
+selvalue.addEventListener("change",
+    (e)=>update(selvalue.value)
 );
