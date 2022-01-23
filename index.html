@@ -7,8 +7,17 @@
     </style>
   </head>
   <body>
-    <textarea name="textin" id="txt"></textarea>
-    <textarea name="textout" id="txt"></textarea>
-    <script src=""></script>
+    <h1>Text To UTF-8 and UTF-8 to text converter</h1>
+    <div class="selector">
+      <select name="selector" id="selector">
+        <option value="hexToText">hex to text</option>
+        <option value="textToHex">text to hex</option>
+      </select>
+    </div>
+    <div class='inout'>
+      <textarea name="textin" id="txt" cols="120" rows="30"></textarea>
+      <textarea name="textout" id="txt" cols="120" rows="30"></textarea>
+    </div>
+    <script src="./src/script.js"></script>
   </body>
 </html>

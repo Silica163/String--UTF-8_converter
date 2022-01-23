@@ -48,7 +48,6 @@ Converter.prototype.binaryToHex = function(binlist){
 Converter.prototype.UTF_8ToUni = function(hexval){
     var bina = parseInt(hexval,16).toString(2);
     var bitlen = bina.length;
-    delete hexval;
     let sl8 = [];
     var slStatus = (()=>{
         if (bina.startsWith('0')||bitlen<=7){return 1}
@@ -72,7 +71,6 @@ Converter.prototype.UTF_8ToUni = function(hexval){
 Converter.prototype.uniToUTF_8 = function(hexvalue){;
     var bina = parseInt(hexvalue,16).toString(2);
     var bitlen = bina.length;
-    delete hexvalue;
     var slStatus = (()=>{
         if(bitlen <= 7){return 1}
         if(bitlen > 7&&bitlen <=11){return 2}
@@ -110,3 +108,5 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
     return hexout;
 
 };
+
+export default Converter
