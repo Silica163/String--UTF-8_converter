@@ -108,5 +108,3 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
     return hexout;
 
 };
-
-module.exports = Converter;
