@@ -109,4 +109,4 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
 
 };
 
-export default Converter
+module.exports = Converter;

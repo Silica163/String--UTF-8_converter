@@ -1,4 +1,4 @@
-import Converter from "../converter.js";
+const Converter = require("../converter.js")
 
 const textIn = document.getElementsByname("textin")[0];
 
