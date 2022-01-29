@@ -1,6 +1,9 @@
+:root{
+    --width:600px;
+}
 html{
     float:center;
-    width:600px;
+    width:var(--width);
     margin:auto;
     font-family: consolas;
 }
