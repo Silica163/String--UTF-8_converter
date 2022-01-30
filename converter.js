@@ -77,6 +77,7 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
         if(bitlen > 11&&bitlen <=16){return 3}
         if(bitlen > 16&&bitlen <=21){return 4}
     })();
+    var sln = [6,12,18];
     let slt = {
         1:function (bina){
             return '0'+('0'.repeat(7-bitlen))+bina;
