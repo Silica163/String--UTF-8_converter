@@ -1,5 +1,6 @@
 function DataStore(name){
     this.name = name;
+    this.setup();
 }
 DataStore.prototype.data = {
 };
@@ -9,7 +10,6 @@ DataStore.prototype.setup = function(){
     }else{
         this.data = JSON.parse(localStorage.getItem(this.name));
         console.log(this.data);
-        console.log(localStorage.getItem(this.name));
     }
 }
 DataStore.prototype.data.allname = []

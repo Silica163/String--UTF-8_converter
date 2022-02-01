@@ -1,6 +1,6 @@
 function Main(){
+    // extends Converter
     Converter.call(this);
-    console.dir(this.dataout);
 
     const select = document.getElementById("selector");
     const textIn = document.getElementsByName("textin")[0];
@@ -11,6 +11,7 @@ function Main(){
     select.addEventListener("change",this.afterChange.bind(this));
     this.setup();
 }
+
 Main.prototype.afterChange = function(e){
     clearTimeout(this.timeoutId);
     this.timeoutId = setTimeout(this.upDate.bind(this), 100);
@@ -19,10 +20,15 @@ Main.prototype.afterChange = function(e){
 Object.setPrototypeOf(Main.prototype,Converter.prototype);
 
 Main.prototype.setup = function(){
+    // load data from localStore
     var txtin = "txtin";
     var choice = "choice";
     var storename = "inputdata";
     this.storevarable = new DataStore(storename);
+    console.log(this.storevarable);
+    document.querySelector("#selector").value = this.storevarable.get(choice);
+    document.querySelector("textarea").value = this.storevarable.get(txtin);
+    this.afterChange();
 };
 
 Main.prototype.convert = function(){
@@ -33,41 +39,59 @@ Main.prototype.convert = function(){
         case "hexToBin": return this.hexToBinary(this.datain.split(" "));
         case "binToHex": return this.binaryToHex(this.datain.split(" "));
         case "binToText": return this.hexToString(this.binaryToHex(this.datain.split(' ')));
+        default:return [];
     }
 };
 
 Main.prototype.frSlicer = function(str,len){
-    str = str.join('');
-    if(!this.choice.startsWith("text")){
+    if(typeof str == "object"){
+        for (let id in str){
+            str[id] = str[id].length%len==0?str[id]:("0".repeat(len-(str[id].length%len))+str[id]);
+        }
+        str = str.join("");
         str.replace(" ",'');
     }
     var strout=[];
     var posnow = 0;
     while(true){
-        strout.push(str.slice(posnow,posnow+len));
-        if(posnow >= str.length){break}
+        var value = str.slice(posnow,posnow+len);
+        strout.push(value);
+        if(posnow >= str.length){
+            break;
+        }
         posnow += len;
     }
-    console.log(strout)
     return strout;
 };
 
 Main.prototype.fomat =function(){
     if(this.choice == "hexToText"||this.choice =="binToText"){
+        // output = text
         return this.convert();
     }else if(this.choice == "hexToBin"||this.choice =="textToBin"){
+        // output = binary
         return this.frSlicer(this.convert(),8).join(' ');
     }else{
+        // output = hex
         return this.frSlicer(this.convert(),2).join(' ');
     }
 };
 
 Main.prototype.output = function(){
-    document.getElementsByTagName("textarea")[1].value = this.fomat();
+    document.getElementsByName("textout")[0].value = this.fomat();
 };
 
 Main.prototype.upDate = function(){
+    this.toid2 = null;
+    clearTimeout(this.toid2);
+    var txtin = "txtin";
+    var choice = "choice";
     this.choice = document.querySelector("#selector").value;
     this.datain = document.querySelector("textarea").value;
+    this.storevarable.set(choice,this.choice);
+    this.storevarable.set(txtin,this.datain);
     this.output();
+    this.toid2 = setTimeout(this.store.bind(this),5000);
 };
+
+Main.prototype.store = function(){this.storevarable.Update()}

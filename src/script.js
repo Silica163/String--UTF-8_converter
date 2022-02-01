@@ -1,6 +1,11 @@
-var run = new Main();
+var run ;
+const load = ()=>{
+    run = new Main();
+}
 
 const storedata = ()=>{
     run.store();
+    open("about:blank")
 }
-window.onclose = ()=>{storedata};
+window.onload = ()=>{load()};
+window.onclose = ()=>{storedata()};

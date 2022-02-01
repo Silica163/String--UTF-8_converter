@@ -7,20 +7,23 @@
   </head>
   <body>
     <h1>Convert unit between String UTF-8 and Binary</h1>
-    <div class="selector">
-      <select name="selector" id="selector" ">
-        <option value="hexToText">hex to text</option>
-        <option value="textToHex">text to hex</option>
-        <option value="hexToBin">hex to binary</option>
-        <option value="binToHex">hex to binary</option>
-        <option value="textToBin">text to binary</option>
-        <option value="binToText">binary to text</option>
-      </select>
-    </div>
-    <div class='inout'>
-      <textarea name="textin" id="txt" cols="70" rows="15"></textarea><br>
-      <textarea name="textout" id="txt" cols="70" rows="15" readonly></textarea>
-    </div>
+    <form name="datainout">
+      <div class="selector">
+        <select name="selector" id="selector">
+          <option value="textToHex">text to hex</option>
+          <option value="textToBin">text to binary</option>
+          <option value="hexToText">hex to text</option>
+          <option value="hexToBin">hex to binary</option>
+          <option value="binToHex">binary to hex</option>
+          <option value="binToText">binary to text</option>
+        </select>
+      </div>
+      <div class='inout'>
+        <textarea name="textin" id="txt" cols="70" rows="15"></textarea><br>
+        <textarea name="textout" id="txt" cols="70" rows="15" readonly></textarea>
+      </div>
+    </form>
+    
     <script src="./converter.js"></script>
     <script src="./src/datastore.js"></script>
     <script src="./src/main.js"></script>
