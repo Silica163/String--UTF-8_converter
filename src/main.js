@@ -5,6 +5,11 @@ function Main(){
     const select = document.getElementById("selector");
     const textIn = document.getElementsByName("textin")[0];
 
+    this.toid2 = null;
+    this.txtinname = "txtin";
+    this.choicename = "choice";
+    this.storename = "inputdata";
+
     this.timeoutId = null;
     textIn.addEventListener("change",this.afterChange.bind(this));
     textIn.addEventListener("input",this.afterChange.bind(this));
@@ -21,13 +26,11 @@ Object.setPrototypeOf(Main.prototype,Converter.prototype);
 
 Main.prototype.setup = function(){
     // load data from localStore
-    var txtin = "txtin";
-    var choice = "choice";
-    var storename = "inputdata";
-    this.storevarable = new DataStore(storename);
+    this.storevarable = new DataStore(this.storename);
     console.log(this.storevarable);
-    document.querySelector("#selector").value = this.storevarable.get(choice);
-    document.querySelector("textarea").value = this.storevarable.get(txtin);
+    var selectvar = this.storevarable.get(this.choicename);
+    document.querySelector("#selector").value = selectvar==undefined?"textToHex":selectvar;
+    document.querySelector("textarea").value = this.storevarable.get(this.txtinname);
     this.afterChange();
 };
 
@@ -45,10 +48,10 @@ Main.prototype.convert = function(){
 
 Main.prototype.frSlicer = function(str,len){
     if(typeof str == "object"){
-        for (let id in str){
-            str[id] = str[id].length%len==0?str[id]:("0".repeat(len-(str[id].length%len))+str[id]);
-        }
-        str = str.join("");
+        // if length of value less than <len> add 0 at front until it equal to <len>
+        // join array to string
+        str = str.map(val=>val.length%len==0?val:("0".repeat(len-(val.length%len))+val)).join('');
+        // remove space from <str>
         str.replace(" ",'');
     }
     var strout=[];
@@ -82,16 +85,14 @@ Main.prototype.output = function(){
 };
 
 Main.prototype.upDate = function(){
-    this.toid2 = null;
     clearTimeout(this.toid2);
-    var txtin = "txtin";
-    var choice = "choice";
     this.choice = document.querySelector("#selector").value;
     this.datain = document.querySelector("textarea").value;
-    this.storevarable.set(choice,this.choice);
-    this.storevarable.set(txtin,this.datain);
     this.output();
     this.toid2 = setTimeout(this.store.bind(this),5000);
 };
 
-Main.prototype.store = function(){this.storevarable.Update()}
+Main.prototype.store = function(){
+    this.storevarable.set(this.choicename,this.choice);
+    this.storevarable.set(this.txtinname,this.datain);
+    this.storevarable.Update()}

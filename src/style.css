@@ -1,9 +1,29 @@
 :root{
     --width:600px;
+    --bg:#333;
+    --fg:#eee;
+    --fontz:15px;
+}
+::selection{
+    background-color: var(--fg);
+    color:var(--bg);
 }
 html{
+    background-color: var(--bg);
+    color: var(--fg);
     float:center;
     width:var(--width);
     margin:auto;
     font-family: consolas;
+    font-size: var(--fontz);
+}
+textarea{
+    background-color: var(--bg);
+    font-size: var(--fontz);
+    color: var(--fg);
+}
+select{
+    background-color: var(--bg);
+    font-size: var(--fontz);
+    color: var(--fg);
 }
