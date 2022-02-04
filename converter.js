@@ -1,3 +1,20 @@
+const bkSlicer = (str,frstr,sllen) => {
+    if(typeof frstr != "string"){frstr = frstr.toString()}
+    if(typeof str != "string"){str = str.toString()}
+    str = str.split('').reverse().join('');
+    str = str.length % sllen == 0 ? str : str + frstr.repeat(sllen - (str.length % sllen));
+    var slis = [];
+    for (var id = 0;id<str.length;id+=sllen){
+        slis.push(str.slice(id,id+sllen));
+    }
+    slis = slis.reverse().map(
+        val=>{
+            return val.split('').reverse().join('');
+        }
+    );
+    return slis;
+}
+
 function Converter(){}
 
 Converter.prototype.stringToHex = function(str){
@@ -48,18 +65,9 @@ Converter.prototype.binaryToHex = function(binlist){
 Converter.prototype.UTF_8ToUni = function(hexval){
     var bina = parseInt(hexval,16).toString(2);
     var bitlen = bina.length;
-    let sl8 = [];
-    var slStatus = (()=>{
-        if (bina.startsWith('0')||bitlen<=7){return 1}
-        if (bina.startsWith('110')){return 2}
-        if (bina.startsWith('1110')){return 3}
-        if (bina.startsWith('11110')){return 4}
-    })();
-    sl8.unshift(bina.slice(-8, bina.length));
-    for (let by = 1; by < bina.length / 8; by++) {
-        sl8.unshift(bina.slice(-8 * (by + 1), -8 * by));
-    }
-    sl8[0] = sl8[0].slice(sl8.length-1);
+    let sl8 = bkSlicer(bina,0,8);
+
+    sl8[0] = sl8[0].slice(sl8.length);
     for(let ti = 1;ti<sl8.length;ti++){
         sl8[ti] = sl8[ti].slice(2);
     }
