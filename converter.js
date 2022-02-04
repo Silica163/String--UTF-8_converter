@@ -85,30 +85,29 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
         if(bitlen > 11&&bitlen <=16){return 3}
         if(bitlen > 16&&bitlen <=21){return 4}
     })();
-    var sln = [6,12,18];
     let slt = {
         1:function (bina){
             return '0'+('0'.repeat(7-bitlen))+bina;
         },
         2:function (bina){
             var bitlist = '0'.repeat(11-bitlen)+bina;
-            var lby = bitlist.slice(-sln[0],bitlist.length);
-            var fby = bitlist.slice(0,-7);
+            var lby = bitlist.slice(-6,bitlist.length);
+            var fby = bitlist.slice(0,-6);
             return `110${fby}10${lby}`;
         },
         3:function (bina){
             var bitlist = '0'.repeat(16-bitlen)+bina;
-            var lby = bitlist.slice(-sln[0],bitlist.length);
-            var mby = bitlist.slice(-sln[1],-sln[0]);
-            var fby = bitlist.slice(0,-sln[1]);
+            var lby = bitlist.slice(-6,bitlist.length);
+            var mby = bitlist.slice(-12,-6);
+            var fby = bitlist.slice(0,-12);
             return `1110${fby}10${mby}10${lby}`;
         },
         4:function (bina){
             var bitlist = '0'.repeat(21-bitlen)+bina;
-            var lby = bitlist.slice(-sln[0],bitlist.length);
-            var mby = bitlist.slice(-sln[1],-sln[0]);
-            var mfby = bitlist.slice(-sln[2],-sln[1]);
-            var fby = bitlist.slice(0,-sln[2]);
+            var lby = bitlist.slice(-6,bitlist.length);
+            var mby = bitlist.slice(-12,-6);
+            var mfby = bitlist.slice(-18,-12);
+            var fby = bitlist.slice(0,-18);
             return `11110${fby}10${mfby}10${mby}10${lby}`;
         },
     };
