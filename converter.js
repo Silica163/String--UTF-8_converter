@@ -15,7 +15,7 @@ Converter.prototype.stringToHex = function(str){
 Converter.prototype.hexToString = function(hexlist){
     const lttrList = [];
     for (let hexVal of hexlist){
-        var lttr = String.fromCharCode(parseInt(this.UTF_8ToUni(hexVal),16));
+        var lttr = String.fromCodePoint(parseInt(this.UTF_8ToUni(hexVal),16));
         lttrList.push(lttr);
     }
     return lttrList.join('');
