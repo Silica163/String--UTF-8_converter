@@ -64,7 +64,6 @@ Converter.prototype.binaryToHex = function(binlist){
 
 Converter.prototype.UTF_8ToUni = function(hexval){
     var bina = parseInt(hexval,16).toString(2);
-    var bitlen = bina.length;
     let sl8 = bkSlicer(bina,0,8);
 
     sl8[0] = sl8[0].slice(sl8.length);
