@@ -85,33 +85,20 @@ Converter.prototype.uniToUTF_8 = function(hexvalue){;
         if(bitlen > 11&&bitlen <=16){return 3}
         if(bitlen > 16&&bitlen <=21){return 4}
     })();
-    let slt = {
-        1:function (bina){
-            return '0'+('0'.repeat(7-bitlen))+bina;
-        },
-        2:function (bina){
-            var bitlist = '0'.repeat(11-bitlen)+bina;
-            var lby = bitlist.slice(-6,bitlist.length);
-            var fby = bitlist.slice(0,-6);
-            return `110${fby}10${lby}`;
-        },
-        3:function (bina){
-            var bitlist = '0'.repeat(16-bitlen)+bina;
-            var lby = bitlist.slice(-6,bitlist.length);
-            var mby = bitlist.slice(-12,-6);
-            var fby = bitlist.slice(0,-12);
-            return `1110${fby}10${mby}10${lby}`;
-        },
-        4:function (bina){
-            var bitlist = '0'.repeat(21-bitlen)+bina;
-            var lby = bitlist.slice(-6,bitlist.length);
-            var mby = bitlist.slice(-12,-6);
-            var mfby = bitlist.slice(-18,-12);
-            var fby = bitlist.slice(0,-18);
-            return `11110${fby}10${mfby}10${mby}10${lby}`;
-        },
-    };
-    var bitout = slt[slStatus](bina);
+    var stsl = {1:7,2:11,3:16,4:21}
+    var prefix = {1:'0',2:'110',3:'1110',4:'11110'}
+    var bitlist = '0'.repeat(stsl[slStatus]-bitlen)+bina;
+    // slice 6 bit 
+    let sl6 = bitlen<8?[bitlist]:bkSlicer(bitlist,'',6);
+    for(var id in sl6){
+        // add code at front
+        if(id==0){
+            sl6[id] = prefix[slStatus]+sl6[id];
+        }else{
+            sl6[id] = '10'+sl6[id];
+        }
+    }
+    var bitout = sl6.join('');
     var hexout = parseInt(bitout,2).toString(16);
     return hexout;
 
