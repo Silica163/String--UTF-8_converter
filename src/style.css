@@ -27,3 +27,9 @@ select{
     font-size: var(--fontz);
     color: var(--fg);
 }
+#auto{
+    caret-color: var(--bg);
+}
+#auto:checked{
+    accent-color:#1ba000;
+}

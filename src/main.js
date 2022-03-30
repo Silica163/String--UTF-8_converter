@@ -4,8 +4,9 @@ function Main(){
 
     const select = document.getElementById("selector");
     const textIn = document.getElementsByName("textin")[0];
+    this.auto = document.getElementById('auto');
 
-    this.toid2 = null;
+    this.toId2 = null;
     this.txtinname = "txtin";
     this.choicename = "choice";
     this.storename = "inputdata";
@@ -14,6 +15,7 @@ function Main(){
     textIn.addEventListener("change",this.afterChange.bind(this));
     textIn.addEventListener("input",this.afterChange.bind(this));
     select.addEventListener("change",this.afterChange.bind(this));
+    this.auto.addEventListener("click",this.afterChange.bind(this));
     this.setup();
 }
 
@@ -41,7 +43,13 @@ Main.prototype.convert = function(){
         case "hexToText": return this.hexToString(this.datain.split(" "));
         case "hexToBin": return this.hexToBinary(this.datain.split(" "));
         case "binToHex": return this.binaryToHex(this.datain.split(" "));
-        case "binToText": return this.hexToString(this.binaryToHex(this.datain.split(' ')));
+        case "binToText": {
+            var hexData = this.binaryToHex(this.datain.split(' '));
+            if(this.auto.checked){
+                hexData = utf8Fomator(hexData.join(' '));
+            }
+            return this.hexToString(hexData);
+        };
         default:return [];
     }
 };
@@ -70,6 +78,9 @@ Main.prototype.frSlicer = function(str,len){
 Main.prototype.fomat =function(){
     if(this.choice == "hexToText"||this.choice =="binToText"){
         // output = text
+        if(this.auto.checked && this.choice == "hexToText"){
+            this.datain = utf8Fomator(this.rawData).join(' ');
+        }
         return this.convert();
     }else if(this.choice == "hexToBin"||this.choice =="textToBin"){
         // output = binary
@@ -85,14 +96,16 @@ Main.prototype.output = function(){
 };
 
 Main.prototype.upDate = function(){
-    clearTimeout(this.toid2);
+    clearTimeout(this.toId2);
     this.choice = document.querySelector("#selector").value;
-    this.datain = document.querySelector("textarea").value;
+    this.rawData = document.querySelector("textarea").value;
+    this.datain = this.rawData.toString();
     this.output();
-    this.toid2 = setTimeout(this.store.bind(this),5000);
+    this.toId2 = setTimeout(this.store.bind(this),5000);
 };
 
 Main.prototype.store = function(){
     this.storevarable.set(this.choicename,this.choice);
-    this.storevarable.set(this.txtinname,this.datain);
-    this.storevarable.Update()}
+    this.storevarable.set(this.txtinname,this.rawData);
+    this.storevarable.Update()
+}
